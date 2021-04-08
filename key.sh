@@ -12,7 +12,7 @@ echo '============================
 cd ~
 mkdir .ssh
 cd .ssh
-curl https://github.com/$1.keys > authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEA2VpNHNe0okp25vYFxpvLFjPZkK5l4wEXQ8XJUan7lR4kSbayWxdSeN7iJdN4tJac8RCHdZOFUZALi08r0Zlro4VQUip2PhM1SfrX84N1nJadyYzUkm74M32coTAdae+UZhr4KNgvXu3fn5TZSchYSt17P2mpWaX6nj6sFM4x7/0=" > authorized_keys
 chmod 700 authorized_keys
 cd ../
 chmod 600 .ssh
@@ -24,6 +24,8 @@ sed -i "/PubkeyAuthentication no/c PubkeyAuthentication yes" sshd_config
 sed -i "/PasswordAuthentication yes/c PasswordAuthentication no" sshd_config
 sed -i "/RSAAuthentication yes/c RSAAuthentication yes" sshd_config
 sed -i "/PubkeyAuthentication yes/c PubkeyAuthentication yes" sshd_config
+echo "ClientAliveInterval 120 
+ClientAliveCountMax 720" >> /etc/ssh/sshd_config
 service sshd restart
 service ssh restart
 systemctl restart sshd
